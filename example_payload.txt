@@ -1,0 +1,6 @@
+{"name": "Anna",
+"email": "anna@anna.com",
+"password": "anna_password",
+"mobile_number": "1234567890",
+"date_of_birth": "2000-12-31"
+}
