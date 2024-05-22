@@ -266,7 +266,23 @@ def sample_test(request, name):
 
 ## 2. Experience with models and migrations
 
-We will start a branch new project and build a somple form that takes in data, stores it in the database and gets retrieved when needed. 
+We will start a branch new project and build a simple form that takes in data, stores it in the database and gets retrieved when needed. 
+
+The information about a user that will be collected from the form is:
+ - Name
+ - Photo
+ - Email
+ - Password
+ - Mobile Number
+ - Date of birth
+
+There will be 5 page actions from the user:
+ - Adding a user
+ - Deleting a user
+ - Editing a user's details
+ - Viewing a user's detail
+ - Listing all the users (Main page)
+        
 
 Some steps will be assusmed:
  - python, pip are installed,
@@ -275,4 +291,84 @@ Some steps will be assusmed:
 
 Now let's repeat the steps above:
 
- 1. `django-admin startproject django_project .` Check for `manage.py` and `django_project` folder.
+
+## Basics
+ 1. Activate your virtual environment
+ 2. Run from the terminal : `django-admin startproject django_project .` Check for `manage.py` and `django_project` folder.
+ 3. Create `db.sqlite3` by running: `python manage.py migrate`
+ 4. Connect `db.sqlite3` to DBeaver for tracking
+ 5. Run the server with: `python manage.py runserver`
+ 6. Stop the server with `ctrl + c` on the terminal
+7. Create an app called `register_app` with: `python manage.py startapp register_app`. Check for `register_app` folder.
+8. In `\django_project\settings.py` the `register_app` to django's set of installed apps list `INSTALLED_APPS`. 
+9. In `\django_project\settings.py`, check if `django.contrib.staticfiles` is present. 
+
+
+## Hello World!
+10.  In `register_app\views.py`, add the function `hello`
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+def hello(request):
+    return HttpResponse("Hello, from Hyperion!")
+```
+11.  In `register_app\urls`, add the variable `urlpatterns`. Create if do not exist.
+```python
+from django.urls import path
+from register_app import views
+
+urlpatterns = [
+    path("hello/", views.hello, name="hello"),
+]
+```
+11. In `django_project\urls`, add  `urlpatterns`
+```python
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include("register_app.urls")),
+]
+```
+## Static files location
+12. In `django_project\urls`, add `from django.contrib.staticfiles.urls import staticfiles_urlpatterns` on top, and `urlpatterns += staticfiles_urlpatterns()` after the current set of urls. That is for `.css` and other types of files.
+
+## Forms
+We will be creating the Django form that will be responsible of collecting the user's information.
+13. In `register_app\forms.py` add the required fields, in the created form class `UserForm`
+
+## Models
+Now that we have the forms, let's create the models correcponding tht forms.
+14. In `register_app\models.py` add the `User` model.
+15. New model added, then we need to acknoledge the changes with `python manage.py makemigrations`
+python manage.py migrate
+16. Open DBeaver, and look for the table `register_app_user`. Then, you do `SELECT * FROM register_app_user`
+
+## Views
+Now we need to create views. Functions that are the responsible to link the models and the HTML pages, the templates.
+17. In `register_app\views.py` add, the functions `add_user` and `user_list`. 
+18. In `register_app\urls`, add the variable `urlpatterns`. Create if do not exist.
+```python
+from django.urls import path
+from register_app import views
+
+urlpatterns = [
+    path("", views.user_list, name = "home"),
+    path("hello/", views.hello, name = "hello"),
+    path('add/', views.add_user, name = "add"),
+]
+```
+
+## Templates
+Now we need to create the html pages for those actions. 
+19. In `register_app` create a folder named `templates`.
+20. In `register_app\templates` create a folder named `register_app`. (Blame it on Django)
+
+## Final Verification
+21. Run the server with: `python manage.py runserver`
+22. Open the page on the browser: `http://127.0.0.1:8000/`
+23. Click on `Add User`.
+24. Add a user and save. 
+25. Check your data in DBeaver. 
+26. Enjoy the rest!

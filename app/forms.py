@@ -9,7 +9,7 @@ class DateInput(forms.DateInput):
 class UserForm(forms.ModelForm):
     class Meta:
         model=User
-        fields =('name','photo','email','password','mobile_number','date_of_birth')
+        fields =('name','photo','email','password','mobile_number','date_of_birth',)
         widgets = {
         'password': forms.PasswordInput(),
         'date_of_birth': DateInput(),
