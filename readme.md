@@ -371,4 +371,4 @@ Now we need to create the html pages for those actions.
 23. Click on `Add User`.
 24. Add a user and save. 
 25. Check your data in DBeaver. 
-26. Enjoy the rest!
+26. Enjoy the rest! 
