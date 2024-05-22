@@ -1,12 +1,10 @@
 from django.urls import path, include
-from . import views
-from .models import User
+from app import views
 
-app_name = "app"
 urlpatterns = [
-    path('', views.user_list),
-    path('add/', views.add_user),
-    path('edit/<id>', views.edit_user),
-    path('delete/<eid>', views.delete_user),
-    path('view/<eid>', views.view_user),
+    path("", views.user_list, name = "home"),
+    path('add/', views.add_user, name = "add"),
+    path('edit/<id>', views.edit_user, name = "edit"),
+    path('delete/<eid>', views.delete_user, name = "delete"),
+    path('view/<eid>', views.view_user, name = "view"),
 ]
